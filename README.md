@@ -1,45 +1,98 @@
-# Employee Attrition Prediction with Neural Networks
+# Employee Attrition Prediction
 
-Deep learning model to predict employee attrition and department fit using a branched neural network architecture. Built with TensorFlow/Keras on HR analytics data to help organizations identify flight risk and optimize talent placement.
+HR analytics model predicting employee attrition risk and department fit using a branched multi-output neural network.
 
 ---
 
-## Key Results
+## Overview
 
-- **Branched neural network** with shared layers + two output heads: attrition prediction and department classification
-- Attrition output: binary classification (likely to leave vs. stay)
-- Department output: multi-class classification across business units
-- Feature engineering on HR metrics including satisfaction scores, tenure, overtime, and performance ratings
+This project applies deep learning to HR analytics data to simultaneously solve two classification problems: predicting whether an employee will leave the company, and determining their best-fit department. A shared-layer branched neural network architecture handles both tasks within a single training pipeline.
+
+---
+
+## Problem Statement
+
+Employee attrition is costly and disruptive. Traditional HR models treat retention and role-fit as separate problems. This project uses a multi-output network to jointly optimize both predictions, enabling HR teams to identify at-risk employees and recommend appropriate departmental re-assignments in one pass.
+
+---
+
+## Model Architecture
+
+```
+Input Features (HR metrics)
+        │
+   Shared Dense Layers
+   (feature extraction)
+        │
+   ┌────┴────┐
+   │         │
+Output 1    Output 2
+(Attrition) (Department)
+Binary      Multi-class
+```
+
+- **Shared layers:** Extract common HR feature representations
+- **Output Head 1:** Binary classification — will the employee stay or leave?
+- **Output Head 2:** Multi-class classification — which department is the best fit?
+- **Preprocessing:** StandardScaler for numerical features; OneHotEncoding for categorical variables
+
+---
+
+## Input Features
+
+HR metrics analyzed include:
+- Employee satisfaction scores
+- Salary level
+- Tenure duration
+- Overtime status
+- Performance ratings
 
 ---
 
 ## Tech Stack
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
-
-- **Architecture:** Multi-output neural network with shared feature extraction layers
-- **Preprocessing:** StandardScaler normalization, OneHotEncoding for categorical features
-- **Evaluation:** Accuracy metrics on both attrition and department prediction tasks
-
----
-
-## Project Structure
-
-```
-├── Attrition_Final.ipynb    # Main model notebook
-└── README.md
-```
+| Component | Tool |
+|---|---|
+| Deep learning framework | TensorFlow / Keras |
+| Data preprocessing | scikit-learn (StandardScaler, OneHotEncoder) |
+| Data manipulation | pandas |
+| Language | Python |
 
 ---
 
 ## Methodology
 
-1. Loaded and preprocessed HR dataset (satisfaction scores, salary, tenure, overtime, etc.)
-2. Encoded categorical features and scaled numerical inputs
-3. Built branched Keras model — shared dense layers split into two output heads
-4. Trained and evaluated on attrition (binary) and department fit (multi-class)
-5. Tuned activation functions and layer depth to optimize dual-task performance
+1. Load and explore the HR dataset
+2. Encode categorical variables and scale numerical features
+3. Construct branched Keras model with shared and task-specific output layers
+4. Train simultaneously on both classification targets
+5. Tune activation functions and layer depth for both output heads
+6. Evaluate performance separately for attrition and department prediction
+
+---
+
+## Repository Structure
+
+```
+employee-attrition-prediction/
+├── employee_attrition_prediction.ipynb   # Full model implementation
+└── README.md
+```
+
+---
+
+## Outcomes
+
+- Designed and trained a multi-output neural network handling two distinct classification objectives within a shared architecture
+- Demonstrated how shared feature extraction reduces training overhead compared to separate models
+- Produced a reusable HR analytics pipeline covering preprocessing, model construction, training, and evaluation
+- Provides a foundation for HR teams to identify high-risk employees while simultaneously assessing role fit
+
+---
+
+## Getting Started
+
+```bash
+pip install tensorflow scikit-learn pandas
+jupyter notebook employee_attrition_prediction.ipynb
+```
